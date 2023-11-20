@@ -11,7 +11,6 @@ const Orderpage = async () => {
 
   const order = await getOrder(email);
 
-  console.log(order);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
