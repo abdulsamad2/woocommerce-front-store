@@ -56,8 +56,6 @@ function CheckoutForm({ total, cart }: any) {
       router.push("/");
     }
   }
-  const { data: session, status } = useSession();
-  console.log(data);
 
   return (
     <section className="text-gray-600 body-font relative">
