@@ -20,6 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/store/useCart";
+import checkExistingCustomer from "@/actions/checkExistingCustomer";
+import { getSession, useSession } from "next-auth/react";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -54,10 +56,12 @@ function CheckoutForm({ total, cart }: any) {
       router.push("/");
     }
   }
+  const { data: session, status } = useSession();
+  console.log(data);
 
   return (
     <section className="text-gray-600 body-font relative">
-      <div className="lg:w-1/2 md:w-2/3 mx-auto">
+      <div className="lg:w-1/2 md:w-2/3 mx-auto px-8">
         <div className="flex flex-wrap -m-2">
           <Form {...form}>
             <form

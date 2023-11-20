@@ -8,11 +8,8 @@ const api = new WooCommerceRestApi({
   version: "wc/v3",
 });
 
-export default async function checkExistingCustomer({ email, userName }: any) {
-  //
-
-  const { data } = await api.get(`customers?search=${email}`);
-  console.log(data);
+export default async function getOrder(email: string) {
+  const { data } = await api.get(`orders?search=${email}`);
 
   return data;
 }

@@ -1,11 +1,30 @@
 "use client";
 import React from "react";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./button";
+import Link from "next/link";
 export const LogoutButton = () => {
   const { data: session } = useSession();
-  if (!session) {
-    return null;
-  }
-  return <Button onClick={() => signOut()}>Logout</Button>;
+  const handleClick = () => {
+    if (session) {
+      signOut();
+    } else {
+      signIn();
+    }
+  };
+
+  return (
+    <>
+      {session ? (
+        <Button onClick={handleClick}> Sign out</Button>
+      ) : (
+        <Link
+          className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          href="/login"
+        >
+          Login
+        </Link>
+      )}
+    </>
+  );
 };

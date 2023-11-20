@@ -4,8 +4,8 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
-  jwt: {
-    maxAge: 60,
+  session: {
+    strategy: "jwt",
   },
   providers: [
     CredentialsProvider({
@@ -26,27 +26,37 @@ export const options: NextAuthOptions = {
         const user = await loginUser({ ...credentials });
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          return user;
+
+          return { ...user };
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+          throw new Error("Invalid username or password");
 
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token = { ...user };
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      // Adding the token to the session object so it's available in the client
+      if (token) {
+        session.user = token;
+      }
+
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
     signOut: "/",
     error: "/login",
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token = { ...token, id: user.id };
-      }
-      return token;
-    },
   },
 };

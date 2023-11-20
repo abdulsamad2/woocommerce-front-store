@@ -64,7 +64,7 @@ export default function Checkout() {
           </section>
         </div>
       </div>
-      {cart.length > 0 && <CheckoutForm />}{" "}
+      {cart.length > 0 && <CheckoutForm total={total} cart={cart} />}{" "}
     </>
   );
 }

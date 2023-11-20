@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -39,7 +40,7 @@ function LoginPage({}: any) {
   const { toast } = useToast();
 
   const { data: session } = useSession();
-  console.log(session);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { username, password } = values;
     if (!username || !password) {
@@ -51,7 +52,7 @@ function LoginPage({}: any) {
       username: username,
       password: password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/my-account",
     });
     if (result?.error) {
       () =>
@@ -108,7 +109,12 @@ function LoginPage({}: any) {
                 )}
               />
 
-              <Button type="submit">Login</Button>
+              <div className="flex justify-between">
+                <Button type="submit">Login</Button>
+                <Link href={"/signup"} className="underline">
+                  {` Don't have a account register`}
+                </Link>
+              </div>
             </form>
           </Form>
         </div>

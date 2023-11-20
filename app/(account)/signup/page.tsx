@@ -19,7 +19,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import createCustomer from "@/actions/createCustomer";
-import checkExistingCustomer from "@/actions/checkExistingCustomer";
 
 const formSchema = z.object({
   fullName: z.string().min(4, {
@@ -37,7 +36,7 @@ const formSchema = z.object({
   }),
 });
 
-function MyAccountPage({}: any) {
+function SignUpPage({}: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -49,20 +48,20 @@ function MyAccountPage({}: any) {
       return;
     }
 
-    const exisTingCustomer = await checkExistingCustomer({ email, userName });
+    // const exisTingCustomer = await checkExistingCustomer({ email, userName });
 
     // if (exisTingCustomer.length > 1) {
     //   alert("Account already exists");
     //   return;
     // }
-    // const data = await createCustomer(values);
-    // console.log(data);
-    // if (data) {
-    //   console.log(data);
-    //   form.reset();
+    const data = await createCustomer(values);
+    console.log(data);
+    if (data) {
+      console.log(data);
+      form.reset();
 
-    //   alert("Account created successfully");
-    // }
+      alert("Account created successfully");
+    }
   }
 
   return (
@@ -147,4 +146,4 @@ function MyAccountPage({}: any) {
   );
 }
 
-export default MyAccountPage;
+export default SignUpPage;
