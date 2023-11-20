@@ -2,7 +2,9 @@
 import CheckoutForm from "@/components/checkoutForm";
 import { Separator } from "@/components/ui/separator";
 import useCartStore from "@/store/useCart";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+
 export default function Checkout() {
   const cart = useCartStore((state) => state.cart);
   const total = useCartStore((state) =>
@@ -12,6 +14,8 @@ export default function Checkout() {
       0
     )
   );
+  const { data: session } = useSession();
+
   return (
     <>
       <div className="container px-5  mx-auto">
@@ -20,7 +24,13 @@ export default function Checkout() {
             Checkout
           </h1>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            CASH ON DELIVERY
+            {cart.length > 0 ? (
+              <> CASH ON DELIVERY</>
+            ) : (
+              <>
+                Cart is empty please add items in the cart in order to proceed
+              </>
+            )}
           </p>
           <section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto space-y-4 flex flex-wrap">
@@ -54,7 +64,7 @@ export default function Checkout() {
           </section>
         </div>
       </div>
-      <CheckoutForm total={total} cart={cart} />
+      {cart.length > 0 && <CheckoutForm />}{" "}
     </>
   );
 }

@@ -2,6 +2,8 @@ import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CartIconButton } from "./CartIconButton";
+import { Button } from "./ui/button";
+import { LogoutButton } from "./ui/logoutButton";
 
 const Header = ({ header }: { header: any }) => {
   const { siteTitle, siteLogoUrl, siteDescription, favicon, headerMenuItems } =
@@ -26,6 +28,7 @@ const Header = ({ header }: { header: any }) => {
           ))}
         </nav>
         <CartIconButton />
+        <LogoutButton />
       </div>
     </header>
   );
