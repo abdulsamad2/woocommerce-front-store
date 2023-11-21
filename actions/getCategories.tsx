@@ -1,5 +1,4 @@
 "use server";
-
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 
 const api = new WooCommerceRestApi({
@@ -9,10 +8,8 @@ const api = new WooCommerceRestApi({
   version: "wc/v3",
 });
 
-export default async function checkExistingCustomer(email: any) {
-  //
-
-  const { data } = await api.get(`customers?search=${email}`);
+export default async function getCategories() {
+  const { data } = await api.get(`products/categories`);
 
   return data;
 }

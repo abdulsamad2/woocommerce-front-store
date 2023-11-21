@@ -7,7 +7,7 @@ import getSiteData from "@/actions/getSiteData";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Providers from "@/provider/next-auth-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { ToastProvider } from "@/provider/toast-provider";
 
 async function getData() {
   const data = await getSiteData();
@@ -32,7 +32,7 @@ export default async function RootLayout({
         <body className={inter.className}>
           <Header header={header} />
           {children}
-          <Toaster />
+          <ToastProvider />
           <Footer footer={footer} />
         </body>
       </Providers>

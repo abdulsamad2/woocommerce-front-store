@@ -27,6 +27,7 @@ export const options: NextAuthOptions = {
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
 
+          console.log("user", user);
           return { ...user };
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -56,7 +57,7 @@ export const options: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
-    signOut: "/",
     error: "/login",
+    signOut: "/",
   },
 };

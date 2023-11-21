@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -36,11 +36,14 @@ const formSchema = z.object({
 function LoginPage({}: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
-  const { toast } = useToast();
 
   const { data: session } = useSession();
-
+  if (session) redirect("/my-account");
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { username, password } = values;
     if (!username || !password) {
@@ -48,19 +51,20 @@ function LoginPage({}: any) {
       return;
     }
 
-    const result = await signIn("credentials", {
-      username: username,
-      password: password,
-      redirect: true,
-      callbackUrl: "/my-account",
-    });
-    if (result?.error) {
-      () =>
-        toast({
-          title: "Error",
-          description: result.error,
-          variant: "destructive",
-        });
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        username: username,
+        password: password,
+        callbackUrl: "/my-account",
+      });
+      if (!result?.ok) {
+        toast.error("Credentials are not valid.");
+        return;
+      }
+      toast.success("Login successful.");
+    } catch (error) {
+      toast.error("Something went wrong.");
     }
   }
 
@@ -82,9 +86,9 @@ function LoginPage({}: any) {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>UserName</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your Username" {...field} />
+                      <Input placeholder="Enter your email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

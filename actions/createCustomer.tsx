@@ -9,14 +9,14 @@ const api = new WooCommerceRestApi({
 });
 
 export default async function createCustomer(values: any) {
-  const { fullName, email, password, userName } = values;
+  const { fullName, email, password } = values;
   const firstName = fullName.split(" ")[0];
   const lastName = fullName.split(" ")[1];
   const { data } = await api.post("customers", {
     email: email,
     first_name: firstName,
     last_name: lastName,
-    username: userName,
+    username: email,
     password: password,
     billing: {
       first_name: "",
@@ -43,6 +43,6 @@ export default async function createCustomer(values: any) {
       country: "",
     },
   });
-  console.log(data);
+
   return data;
 }

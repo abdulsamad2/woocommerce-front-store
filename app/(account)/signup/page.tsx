@@ -19,12 +19,11 @@ import {
 
 import { Input } from "@/components/ui/input";
 import createCustomer from "@/actions/createCustomer";
+import checkExistingCustomer from "@/actions/checkExistingCustomer";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   fullName: z.string().min(4, {
-    message: "Name must be at least 3 characters.",
-  }),
-  userName: z.string().min(3, {
     message: "Name must be at least 3 characters.",
   }),
 
@@ -39,23 +38,28 @@ const formSchema = z.object({
 function SignUpPage({}: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { fullName, userName, email, password } = values;
-    if (!fullName || !userName || !email || !password) {
+    const { fullName, email, password } = values;
+
+    if (!fullName || !email || !password) {
       alert("Please fill all fields");
       return;
     }
 
-    // const exisTingCustomer = await checkExistingCustomer({ email, userName });
+    const exisTingCustomer = await checkExistingCustomer(email);
 
-    // if (exisTingCustomer.length > 1) {
-    //   alert("Account already exists");
-    //   return;
-    // }
+    if (exisTingCustomer[0].email === email) {
+      alert("Account already exists");
+      return;
+    }
     const data = await createCustomer(values);
-    console.log(data);
     if (data) {
       console.log(data);
       form.reset();
@@ -90,22 +94,7 @@ function SignUpPage({}: any) {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="userName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>UserName</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your Desired Username"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <FormField
                 control={form.control}
                 name="email"

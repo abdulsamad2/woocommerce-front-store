@@ -1,9 +1,11 @@
 "use client";
+import checkExistingCustomer from "@/actions/checkExistingCustomer";
 import CheckoutForm from "@/components/checkoutForm";
 import { Separator } from "@/components/ui/separator";
 import useCartStore from "@/store/useCart";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const cart = useCartStore((state) => state.cart);
@@ -14,7 +16,6 @@ export default function Checkout() {
       0
     )
   );
-  const { data: session } = useSession();
 
   return (
     <>
@@ -64,7 +65,7 @@ export default function Checkout() {
           </section>
         </div>
       </div>
-      {cart.length > 0 && <CheckoutForm total={total} cart={cart} />}{" "}
+      {cart.length > 0 && <CheckoutForm total={total} cart={cart} />}
     </>
   );
 }

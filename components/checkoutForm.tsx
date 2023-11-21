@@ -20,8 +20,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import useCartStore from "@/store/useCart";
+import { useSession } from "next-auth/react";
 import checkExistingCustomer from "@/actions/checkExistingCustomer";
-import { getSession, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -42,23 +44,72 @@ const formSchema = z.object({
 });
 
 function CheckoutForm({ total, cart }: any) {
+  const { data: session } = useSession();
+
+  const [existingCustomer, setExistingCustomer] = useState({
+    id: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    address: "",
+    city: "",
+  });
+  // @ts-ignore
+  const email = session?.user?.user_email;
+  useEffect(() => {
+    let defaultValues = {};
+    const data = async () => {
+      const data = await checkExistingCustomer(email);
+      if (data) {
+        setExistingCustomer(data[0]);
+
+        defaultValues = {
+          fullName: data[0]?.first_name
+            ? data[0]?.first_name + " " + data[0]?.last_name
+            : "",
+          phone: data[0]?.phone,
+          email: data[0]?.email,
+          address: data[0]?.billing.address_1,
+          city: data[0]?.billing.city,
+        };
+      }
+      form.reset({
+        ...defaultValues,
+      });
+    };
+    data();
+  }, [email]);
+  const data = {
+    fullName: "",
+    phone: 0,
+    email: "",
+    address: "",
+    city: "",
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: data,
   });
   const router = useRouter();
   const clearCart = useCartStore((state) => state.clearCart);
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = await createOrder({ ...values, cart, total });
+    const data = await createOrder({
+      ...values,
+      cart,
+      total,
+      id: existingCustomer?.id ? existingCustomer?.id : "",
+    });
     if (data) {
       useCartStore.getState().clearCart();
       form.reset();
-      alert("Order created successfully");
+      toast.success("Order placed successfully");
       router.push("/");
     }
   }
 
   return (
-    <section className="text-gray-600 body-font relative">
+    <div className="text-gray-600 body-font relative">
       <div className="lg:w-1/2 md:w-2/3 mx-auto px-8">
         <div className="flex flex-wrap -m-2">
           <Form {...form}>
@@ -73,7 +124,11 @@ function CheckoutForm({ total, cart }: any) {
                   <FormItem>
                     <FormLabel>FullName</FormLabel>
                     <FormControl>
-                      <Input placeholder="Full Name" {...field} />
+                      <Input
+                        readOnly={existingCustomer?.first_name ? true : false}
+                        placeholder="Full Name"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -100,7 +155,7 @@ function CheckoutForm({ total, cart }: any) {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        required
+                        readOnly={existingCustomer?.email ? true : false}
                         placeholder="Enter your email"
                         {...field}
                       />
@@ -117,7 +172,7 @@ function CheckoutForm({ total, cart }: any) {
                     <FormLabel>Address</FormLabel>
                     <FormControl>
                       <Input
-                        required
+                        readOnly={existingCustomer?.address ? true : false}
                         placeholder="Enter your address"
                         {...field}
                       />
@@ -134,7 +189,7 @@ function CheckoutForm({ total, cart }: any) {
                     <FormLabel>City</FormLabel>
                     <FormControl>
                       <Input
-                        required
+                        readOnly={existingCustomer?.city ? true : false}
                         placeholder="Enter your City Name"
                         {...field}
                       />
@@ -210,7 +265,7 @@ function CheckoutForm({ total, cart }: any) {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

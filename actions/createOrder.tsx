@@ -9,7 +9,7 @@ const api = new WooCommerceRestApi({
 });
 
 export default async function createOrder(values: any) {
-  const { fullName, email, phone, address, cart, total, city } = values;
+  const { fullName, email, phone, address, cart, total, city, id } = values;
   const items = cart.map((item: any) => ({
     product_id: item.id,
     quantity: item.qunatity,
@@ -55,6 +55,31 @@ export default async function createOrder(values: any) {
       },
     ],
   });
+
+  if (id) {
+    const updateCustomer = await api.put(`customers/${id}`, {
+      billing: {
+        first_name: firstName,
+        last_name: lastName,
+        company: "",
+        address_1: address,
+        address_2: "",
+        city: city,
+        state: " ",
+        postcode: " ",
+        country: "Pak",
+        phone: phone.toString(),
+      },
+      shipping: {
+        first_name: firstName,
+        last_name: lastName,
+        company: "",
+        address_1: address,
+        address_2: "",
+        city: city,
+      },
+    });
+  }
 
   return data;
 }

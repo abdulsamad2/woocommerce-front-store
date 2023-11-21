@@ -10,7 +10,13 @@ const Orderpage = async () => {
   const email = session?.user?.user_email;
 
   const order = await getOrder(email);
-
+  // const date = new Date().toLocaleDateString("en-us", {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  // });
+  // "Friday, Jul 2, 2021"
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -50,7 +56,16 @@ const Orderpage = async () => {
                 {order.map((item: any) => (
                   <tr key={item.id}>
                     <td className="px-4 py-3">{item.id}</td>
-                    <td className="px-4 py-3">{item.date_created}</td>
+                    <td className="px-4 py-3">
+                      {new Date(item.date_created).toLocaleString("en-US", {
+                        hour12: false,
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                      })}
+                    </td>
                     <td className="px-4 py-3">{item.status}</td>
                     <td className="px-4 py-3 text-lg text-gray-900">
                       {item.total} Rs
