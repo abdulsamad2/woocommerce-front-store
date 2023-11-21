@@ -7,7 +7,7 @@ const Footer = async ({ footer }: { footer: any }) => {
   const categories = await getCategories();
 
   return (
-    <footer className="text-gray-600 body-font border-t-2 bg-slate-100/75">
+    <footer className="text-gray-600 mt-24 body-font border-t-2 bg-slate-100/75">
       <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
           <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">

@@ -76,7 +76,7 @@ function LoginPage({}: any) {
   }
 
   return (
-    <div>
+    <>
       <div className="text-center py-5 space-y-4 md:mt-14 px-4">
         <h1 className="text-3xl font-bold">Login Your Account</h1>
         <p>Login Account to view manage and update your orders</p>
@@ -130,7 +130,7 @@ function LoginPage({}: any) {
           </Form>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -22,7 +22,7 @@ const SingleProduct: React.FC<Props> = async ({ slug }) => {
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
-      <div className="container px-5 py-24 mx-auto">
+      <div className="container px-5 md:py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <Image
             width={400}
@@ -167,7 +167,7 @@ const SingleProduct: React.FC<Props> = async ({ slug }) => {
               </div>
             )}
             <Separator className="mt-4 mb-4" />
-            <div className="flex mt-4">
+            <div className="flex flex-wrap mt-4">
               <p
                 className="title-font font-medium text-2xl text-gray-900"
                 dangerouslySetInnerHTML={{ __html: price_html }}
@@ -179,18 +179,6 @@ const SingleProduct: React.FC<Props> = async ({ slug }) => {
                 qunatity={1}
                 price={price}
               />
-              <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                <svg
-                  fill="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                </svg>
-              </button>
             </div>
           </div>
         </div>

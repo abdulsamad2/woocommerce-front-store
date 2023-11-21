@@ -3,7 +3,8 @@ import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./button";
 import Link from "next/link";
-export const LogoutButton = () => {
+import { cn } from "@/lib/utils";
+export const LogoutButton = ({}) => {
   const { data: session } = useSession();
   const handleClick = () => {
     if (session) {
@@ -14,7 +15,7 @@ export const LogoutButton = () => {
   };
 
   return (
-    <>
+    <div>
       {session ? (
         <Button onClick={handleClick}> Sign out</Button>
       ) : (
@@ -25,6 +26,6 @@ export const LogoutButton = () => {
           Login
         </Link>
       )}
-    </>
+    </div>
   );
 };
