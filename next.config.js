@@ -1,6 +1,6 @@
 // next.config.js
 module.exports = {
   images: {
-    domains: ["headless.abdulsamadfolio.com"],
+    domains: ["headless.abdulsamadfolio.com", "localhost"],
   },
 };

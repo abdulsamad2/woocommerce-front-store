@@ -54,17 +54,21 @@ function SignUpPage({}: any) {
       return;
     }
 
-    const exisTingCustomer = await checkExistingCustomer(email);
+    try {
+      const exisTingCustomer = await checkExistingCustomer(email);
 
-    if (exisTingCustomer[0]?.email === email) {
-      toast.error("Account already exists");
-      return;
-    }
-    const data = await createCustomer(values);
-    if (data) {
-      console.log(data);
-      form.reset();
-      toast.success("Account created successfully");
+      if (exisTingCustomer[0]?.email === email) {
+        toast.error("Account already exists");
+        return;
+      }
+      const data = await createCustomer(values);
+      if (data) {
+        console.log(data);
+        form.reset();
+        toast.success("Account created successfully");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
     }
   }
 
