@@ -22,6 +22,7 @@ import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import checkExistingCustomer from "@/actions/checkExistingCustomer";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -52,6 +53,12 @@ function LoginPage({}: any) {
     }
 
     try {
+      const exisTingCustomer = await checkExistingCustomer(username);
+      if (exisTingCustomer.length === 0) {
+        toast.error("No Account Exists with this email");
+        return;
+      }
+
       const result = await signIn("credentials", {
         redirect: false,
         username: username,
@@ -59,8 +66,7 @@ function LoginPage({}: any) {
         callbackUrl: "/my-account",
       });
       if (!result?.ok) {
-        console.log(result);
-        toast.error("Credentials are not valid.");
+        toast.error(" password is incorrect");
         return;
       }
       toast.success("Login successful.");
