@@ -57,7 +57,7 @@ function SignUpPage({}: any) {
     const exisTingCustomer = await checkExistingCustomer(email);
 
     if (exisTingCustomer[0]?.email === email) {
-      alert("Account already exists");
+      toast.error("Account already exists");
       return;
     }
     const data = await createCustomer(values);
