@@ -59,6 +59,7 @@ function LoginPage({}: any) {
         callbackUrl: "/my-account",
       });
       if (!result?.ok) {
+        console.log(result);
         toast.error("Credentials are not valid.");
         return;
       }
