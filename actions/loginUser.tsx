@@ -3,7 +3,7 @@ import axios from "axios";
 const url = process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL;
 export default async function loginUser({ username, password }: any) {
   const { data } = await axios.post(
-    `https://headless.abdulsamadfolio.com/wp-json/jwt-auth/v1/token}`,
+    `headless.abdulsamadfolio.com/wp-json/jwt-auth/v1/token}`,
     {
       username: username,
       password: password,
