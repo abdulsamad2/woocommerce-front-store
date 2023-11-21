@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import createCustomer from "@/actions/createCustomer";
 import checkExistingCustomer from "@/actions/checkExistingCustomer";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   fullName: z.string().min(4, {
@@ -55,7 +56,7 @@ function SignUpPage({}: any) {
 
     const exisTingCustomer = await checkExistingCustomer(email);
 
-    if (exisTingCustomer[0].email === email) {
+    if (exisTingCustomer[0]?.email === email) {
       alert("Account already exists");
       return;
     }
@@ -63,8 +64,7 @@ function SignUpPage({}: any) {
     if (data) {
       console.log(data);
       form.reset();
-
-      alert("Account created successfully");
+      toast.success("Account created successfully");
     }
   }
 
