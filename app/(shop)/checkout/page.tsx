@@ -41,10 +41,7 @@ export default function Checkout() {
                     key={item.id}
                     className="flex relative  sm:items-center md:w-2/3 mx-auto"
                   >
-                    <div className="flex-grow md:pl-8 pl-6 justify-between flex sm:items-center items-start flex-col sm:flex-row">
-                      <div className="flex-shrink-0 w-24 h-24 bg-indigo-100  rounded-full inline-flex items-center justify-center">
-                        <Image src={"/"} alt="logo" width={64} height={64} />
-                      </div>
+                    <div className="flex-grow md:pl-8 pl-6 justify-around border  flex sm:items-center items-start flex-col sm:flex-row">
                       <div className="flex flex-wrap gap-6 items-center sm:pl-6 mt-6 sm:mt-0">
                         <p className="font-medium underline title-font text-gray-900 mb-1 text-xl">
                           {item.name}

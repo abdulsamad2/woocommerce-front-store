@@ -16,7 +16,7 @@ const SideModal = ({
 }: {
   children: React.ReactNode;
   triggerButton: any;
-  open: boolean;
+  open?: boolean;
 }) => {
   return (
     <Sheet>
