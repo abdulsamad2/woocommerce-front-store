@@ -3,6 +3,7 @@ import useCartStore from "@/store/useCart";
 import { Button } from "./button";
 import { ShoppingBagIcon } from "lucide-react";
 import SideModal from "./sideModal";
+import toast from "react-hot-toast";
 
 const AddToCartButton = ({
   text = "",
@@ -21,7 +22,7 @@ const AddToCartButton = ({
   const cart = useCartStore((state) => state.cart);
   const handleAddToCart = () => {
     addToCart({ id, name, qunatity, price });
-    SideModal;
+    toast.success("Item added to cart");
   };
   return (
     <>
