@@ -167,7 +167,7 @@ const SingleProduct: React.FC<Props> = async ({ slug }) => {
               </div>
             )}
             <Separator className="mt-4 mb-4" />
-            <div className="flex flex-wrap mt-4">
+            <div className="flex justify-between md:flex-row flex-col flex-wrap mt-4">
               <p
                 className="title-font font-medium text-2xl text-gray-900"
                 dangerouslySetInnerHTML={{ __html: price_html }}
