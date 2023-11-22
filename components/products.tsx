@@ -10,8 +10,8 @@ const Products = async () => {
 
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-5  md:py-24 mx-auto">
-        <div className="flex  flex-wrap -m-4">
+      <div className="container px-5 py-10  md:py-24 mx-auto">
+        <div className="flex justify-center md:justify-start flex-wrap -m-4">
           {products.map((product: any) => (
             <div
               key={product.permalink}
@@ -36,9 +36,10 @@ const Products = async () => {
                 <h2 className="text-gray-900 title-font text-lg font-medium">
                   <Link href={product?.permalink}>{product.name}</Link>
                 </h2>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col justify-start  md:flex-row  md:justify-between item-start space-y-2 md:space-y-0">
                   <p dangerouslySetInnerHTML={{ __html: product.price_html }} />
                   <AddToCartButton
+                    text=""
                     id={product.id}
                     name={product.name}
                     qunatity={1}

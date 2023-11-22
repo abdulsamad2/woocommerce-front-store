@@ -2,13 +2,16 @@
 import useCartStore from "@/store/useCart";
 import { Button } from "./button";
 import { ShoppingBagIcon } from "lucide-react";
+import SideModal from "./sideModal";
 
 const AddToCartButton = ({
+  text = "",
   id,
   name,
   qunatity,
   price,
 }: {
+  text?: string;
   id: number;
   name: string;
   qunatity: number;
@@ -18,14 +21,15 @@ const AddToCartButton = ({
   const cart = useCartStore((state) => state.cart);
   const handleAddToCart = () => {
     addToCart({ id, name, qunatity, price });
+    SideModal;
   };
   return (
     <>
       <Button
-        className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+        className="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
         onClick={handleAddToCart}
       >
-        Add to Cart
+        {text}
         <ShoppingBagIcon className="w-4 h-4 ml-1" />
       </Button>
     </>

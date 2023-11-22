@@ -174,6 +174,7 @@ const SingleProduct: React.FC<Props> = async ({ slug }) => {
               />
 
               <AddToCartButton
+                text="Add to cart"
                 id={product[0].id}
                 name={name}
                 qunatity={1}
