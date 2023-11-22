@@ -11,11 +11,11 @@ const Products = async () => {
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-10  md:py-24 mx-auto">
-        <div className="flex justify-center md:justify-start flex-wrap -m-4">
+        <div className="flex flex-grow justify-center md:justify-start flex-wrap -m-4">
           {products.map((product: any) => (
             <div
               key={product.permalink}
-              className="lg:w-1/4 md:w-1/2 p-4  border-2 border-gray-200"
+              className="lg:w-1/4 md:w-1/2 p-4 w-full border-2 border-gray-200"
             >
               <Link
                 href={product?.permalink}
