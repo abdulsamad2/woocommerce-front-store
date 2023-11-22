@@ -9,10 +9,12 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { Separator } from "./ui/separator";
 
 import SideModal from "./ui/sideModal";
+import { useState } from "react";
 const Header = async ({ header }: { header: any }) => {
   const { siteTitle, siteLogoUrl, siteDescription, favicon, headerMenuItems } =
     header;
   const session = await getServerSession(options);
+
   const navMenu = headerMenuItems.map((item: any) => (
     <div className="" key={item.ID}>
       <Link className="md:mr-5  hover:text-gray-900" href={item.url}>

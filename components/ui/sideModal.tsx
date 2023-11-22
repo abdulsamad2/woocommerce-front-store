@@ -12,9 +12,11 @@ import { MenuIcon } from "lucide-react";
 const SideModal = ({
   children,
   triggerButton,
+  open,
 }: {
   children: React.ReactNode;
   triggerButton: any;
+  open: boolean;
 }) => {
   return (
     <Sheet>
