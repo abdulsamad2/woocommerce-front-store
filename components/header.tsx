@@ -9,7 +9,6 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { Separator } from "./ui/separator";
 
 import SideModal from "./ui/sideModal";
-import { SheetClose } from "./ui/sheet";
 
 const Header = async ({ header }: { header: any }) => {
   const { siteTitle, siteLogoUrl, siteDescription, favicon, headerMenuItems } =
@@ -41,16 +40,21 @@ const Header = async ({ header }: { header: any }) => {
         </nav>
         <div className="flex py-2 md:py-0 items-center justify-between space-x-4">
           <CartIconButton />
-
           <div className="hidden md:block">
             <LogoutButton />
           </div>
           <div className="md:hidden cursor-pointer p-1 bg-slate-200 hover:bg-slate-300 active:bg-slate-200  ">
             <SideModal
-              menuItems={headerMenuItems}
               triggerButton={<MenuSquare size={36} className="text-gray" />}
             >
-              <div className="my-5">
+              <div className="flex flex-col space-y-3 text-left">
+                {navMenu}
+                {session && (
+                  <Link className=" hover:text-gray-900" href={"/my-account"}>
+                    My Account
+                  </Link>
+                )}
+
                 <LogoutButton />
               </div>
             </SideModal>
