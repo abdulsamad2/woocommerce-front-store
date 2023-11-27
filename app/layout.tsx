@@ -26,6 +26,7 @@ export default async function RootLayout({
 }) {
   const { data } = await getData();
   const { header, footer } = data;
+
   return (
     <html lang="en">
       <Providers>
